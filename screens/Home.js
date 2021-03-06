@@ -10,7 +10,7 @@ const Home = () => {
             name: "Jacket 4",
             img: images.jacket4,
             bgColor: "#D09040",
-            price: "$50",
+            price: "$250",
             type: "Featured",
             sizes: [6, 7, 8, 9, 10, 16],
         },
@@ -40,7 +40,7 @@ const Home = () => {
             style={{height: 300, width: 200, justifyContent: "center", marginHorizontal: SIZES.base }}
             >
                 <Text style={{color: COLORS.lightGray, ...FONTS.h5}}>{item.type}</Text>
-                <View style={{
+                <View style={[{
                     flex: 1,
                     justifyContent: "flex-end",
                     marginTop: SIZES.base,
@@ -50,10 +50,10 @@ const Home = () => {
                     paddingRight: SIZES.padding,
                     paddingBottom: SIZES.radius,
 
-                }}>
-                    <View style={{height: '25%', justifyContent: "space-between"}}>
-                        <Text style={{color: COLORS.white, ...FONTS.body4}}>{item.name}</Text>
-                        <Text style={{color: COLORS.white, ...FONTS.h4}}>{item.price}</Text>
+                }, style.featuredShadow ]}>
+                    <View style={style.featuredDetails}>
+                        <Text style={{color: COLORS.white, ...FONTS.body4, marginTop: 15}}>{item.name}</Text>
+                        <Text style={{color: COLORS.white, ...FONTS.h2}}>{item.price}</Text>
                     </View>
                 </View>
                 <Image 
@@ -61,9 +61,9 @@ const Home = () => {
                 resizeMode="cover"
                 style = {{
                     position: "absolute",
-                    top: 30,
-                    right: 10,
-                    width: "100%",
+                    top: 25,
+                    right: 20,
+                    width: "90%",
                     height: 200,
 
                 }}
@@ -85,6 +85,19 @@ const Home = () => {
                 />
 
             </View>
+            {/* Recent Serches */}
+            <View style={[{
+                flex: 1, 
+                marginTop: SIZES.padding, 
+                borderTopLeftRadius: 30, 
+                borderTopRightRadius: 30, backgroundColor: COLORS.white}, style.recentSearchShadow]
+                }>
+                <View style={{width: 70, marginLeft: SIZES.base, backgroundColor: "#000"}}>
+                </View>
+                <View>
+
+                </View>
+            </View>
         </View>
     )
 }
@@ -94,6 +107,34 @@ const style = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.white,
 
+    },
+    featuredShadow: {
+        shadowColor: "#000",
+        shadowOffset:{
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.29,
+        shadowRadius: 4.65,
+        elevation: 7
+    },
+    featuredDetails: {
+        position: "absolute",
+        top: 160,
+        left: 30,
+        flexDirection: "column",
+        marginLeft: 25,
+        marginBottom: 8,
+    },
+    recentSearchShadow:{
+        shadowColor: "#000",
+        shadowOffset:{
+            width: 0,
+            height: 5,
+        },
+        shadowOpacity: 0.29,
+        shadowRadius: 4.65, 
+        elevation: 7
     }
 })
 
