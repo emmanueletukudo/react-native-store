@@ -1,9 +1,14 @@
 import React from "react";
-import {StyleSheet, View, Text, FlatList, TouchableOpacity, Image} from "react-native";
+import {StyleSheet, View, Text, FlatList, TouchableOpacity, Image, Modal} from "react-native";
 import { images, COLORS, SIZES, FONTS } from "../constants";
+import {BlurView} from "@react-native-community/blur";
 
 
 const Home = () => {
+    const [showAddToCartModal, setShowAddToCartModal] = React.useState(false);
+    const [selectItem, setSelecetedItem] =  React.useState(null);
+    const [selectedSize, setSelectedSize] = React.useState("");
+
     const [featured, setFeatured] =  React.useState([
         {
             id: 0,
@@ -123,6 +128,10 @@ const Home = () => {
         return(
             <TouchableOpacity 
             style={{height: 300, width: 200, justifyContent: "center", marginHorizontal: SIZES.base }}
+            onPress={() => {
+                setSelecetedItem(item);
+                setShowAddToCartModal(true);
+            }}
             >
                 <Text style={{color: COLORS.lightGray, ...FONTS.h5}}>{item.type}</Text>
                 <View style={[{
@@ -208,8 +217,11 @@ const Home = () => {
                 backgroundColor: COLORS.white}, 
                 style.recentSearchShadow]
                 }>
-                <View style={{width: 70, height: "100%", marginLeft: SIZES.base, backgroundColor: COLORS.lightGray}}>
-                    <Text style={style.recentSearches}>Resent Searches</Text>
+                <View style={{width: 70, height: "100%", marginLeft: SIZES.base}}>
+                    <Image 
+                    source={images.searches}
+                    style={{width: "100%", height: "100%", resizeMode: "contain"}}
+                    />
                 </View>
                 <View style={{flex: 1, paddingBottom: SIZES.padding}}>
                     <FlatList 
@@ -220,6 +232,50 @@ const Home = () => {
                     />
                 </View>
             </View>
+
+            {/* Modal */}
+            { selectItem && 
+            <Modal
+            animationType = "slide"
+            transparent= {true}
+            visible =  {showAddToCartModal}
+            >
+            <BlurView 
+            style={style.blur}
+                blurType = "light"
+                blurAmount = {20}
+                reducedTransparencyFallbackColor = "white"
+                >
+                <TouchableOpacity
+                style={style.absolute}
+                onPress= {() => {
+                    setSelecetedItem(null);
+                    setSelectedSize("");
+                    setShowAddToCartModal(false);
+                }}
+                >
+                </TouchableOpacity>
+                {/* Modal content */}
+                <View style={{justifyContent: "center", width: "85%", backgroundColor: selectItem.bgColor}}> 
+                   <View>
+                   <Image
+                    source = {selectItem.img}
+                    resizeMode = "contain"
+                        style = {{
+                            width: "100%",
+                            height: 170,
+                        }} 
+                    />
+                   </View>
+                   <Text style={{ marginTop: SIZES.padding, marginHorizontal: SIZES.padding, color: COLORS.white, ...FONTS.body2 }}>{selectItem.name}</Text>
+                   <Text style={{ marginTop: SIZES.base / 2, marginHorizontal: SIZES.padding, color: COLORS.white, ...FONTS.body3 }}>{selectItem.type}</Text>
+                   <Text style={{ marginTop: SIZES.radius, marginHorizontal: SIZES.padding, color: COLORS.white, ...FONTS.h1 }}>{selectItem.price}</Text>
+                   <Text>Select Size</Text>
+                </View>
+            </BlurView>
+            </Modal>
+
+            }
         </View>
     )
 }
@@ -261,7 +317,19 @@ const style = StyleSheet.create({
     recentSearches: {
         width: "100%",
         transform: [{ rotateY: "180deg" }]
-    }
+    },
+    blur:{
+        flex: 1, 
+        alignItems: "center", 
+        justifyContent: "center"
+    },
+    absolute:{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+    },
 })
 
 export default Home;
