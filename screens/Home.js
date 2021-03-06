@@ -46,6 +46,24 @@ const Home = () => {
         },
         {
             id: 1,
+            name: "Sweater 3",
+            img: images.sweater3,
+            type: "Featured",
+            bgColor: "#303946",
+            price: "$100" ,
+            sizes: [6, 7, 8, 9, 10, 16, 18],
+        },
+        {
+            id: 2,
+            name: "Sweater 5",
+            img: images.sweater5,
+            type: "Featured",
+            bgColor: "#303946",
+            price: "$100" ,
+            sizes: [6, 7, 8, 9, 10, 18],
+        },
+        {
+            id: 7,
             name: "Jacket 1",
             img: images.jacket1,
             bgColor: "#D3D1C8",
@@ -54,7 +72,7 @@ const Home = () => {
             sizes: [6, 7, 8, 9, 10, 12],
         },
         {
-            id: 2,
+            id: 8,
             name: "Jacket 2",
             img: images.jacket2,
             type: "Featured",
@@ -98,53 +116,9 @@ const Home = () => {
             price: "$100" ,
             sizes: [6, 7, 8, 9, 10, 12],
         },
-        {
-            id: 7,
-            name: "Sweater 3",
-            img: images.sweater3,
-            type: "Featured",
-            bgColor: "#303946",
-            price: "$100" ,
-            sizes: [6, 7, 8, 9, 10, 16, 18],
-        },
-        {
-            id: 8,
-            name: "Sweater 5",
-            img: images.sweater5,
-            type: "Featured",
-            bgColor: "#303946",
-            price: "$100" ,
-            sizes: [6, 7, 8, 9, 10, 18],
-        }
+        
     ])
 
-    function renderRecentSearches(item, index){
-        return(
-            <TouchableOpacity
-            style = {{flex: 1, flexDirection: "row"}}
-            onPress= {() => {console.log("renderRecentSearches")}}
-            >
-            <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
-                <Image
-                source = {item.img}
-                resizeMode = "contain"
-                style = {{
-                    width: 130,
-                    height: 100,
-                }}
-                />
-            </View>
-            <View style={{
-                flex: 1.5,
-                marginLeft: SIZES.radius,
-                justifyContent: "center",
-            }}>
-                <Text>{item.name}</Text>
-                <Text>{item.price}</Text>
-            </View>
-            </TouchableOpacity>
-        )
-    }
     function renderFeaturedItems(item, index){
         return(
             <TouchableOpacity 
@@ -182,6 +156,34 @@ const Home = () => {
             </TouchableOpacity>
         )
     }
+
+    function renderRecentSearches(item, index){
+        return(
+            <TouchableOpacity
+            style = {{flex: 1, flexDirection: "row"}}
+            onPress= {() => {console.log("renderRecentSearches")}}
+            >
+            <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+                <Image
+                source = {item.img}
+                resizeMode = "contain"
+                style = {{
+                    width: 130,
+                    height: 100,
+                }}
+                />
+            </View>
+            <View style={{
+                flex: 1.5,
+                marginLeft: SIZES.radius,
+                justifyContent: "center",
+            }}>
+                <Text>{item.name}</Text>
+                <Text style={{...FONTS.h3}}>{item.price}</Text>
+            </View>
+            </TouchableOpacity>
+        )
+    }
     return (
         <View style={style.container}>
             <Text style={{marginTop: SIZES.radius, marginHorizontal: SIZES.padding, ...FONTS.largeTitleBold}}>FEATURED</Text>
@@ -207,6 +209,7 @@ const Home = () => {
                 style.recentSearchShadow]
                 }>
                 <View style={{width: 70, height: "100%", marginLeft: SIZES.base, backgroundColor: COLORS.lightGray}}>
+                    <Text style={style.recentSearches}>Resent Searches</Text>
                 </View>
                 <View style={{flex: 1, paddingBottom: SIZES.padding}}>
                     <FlatList 
@@ -254,6 +257,10 @@ const style = StyleSheet.create({
         shadowOpacity: 0.29,
         shadowRadius: 4.65, 
         elevation: 7
+    },
+    recentSearches: {
+        width: "100%",
+        transform: [{ rotateY: "180deg" }]
     }
 })
 
