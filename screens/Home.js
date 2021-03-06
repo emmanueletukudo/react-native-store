@@ -1,12 +1,12 @@
 import React from "react";
 import {StyleSheet, View, Text} from "react-native";
-import { COLORS } from "../constants";
+import { images, COLORS, SIZES, FONTS } from "../constants";
 
 
 const Home = () => {
     return (
         <View style={style.container}>
-            <Text>Home</Text>
+            <Text style={{marginTop: SIZES.radius, marginHorizontal: SIZES.padding, ...FONTS.largeTitleBold}}>TRENDING</Text>
         </View>
     )
 }
