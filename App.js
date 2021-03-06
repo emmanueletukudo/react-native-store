@@ -24,7 +24,7 @@ const App = ()=>{
       >
         <Stack.Screen name="Home" component={Home} 
         options={{
-          title: "PRODUCT BASKET", 
+          title: "LOGROCKET STORE", 
           headerTintColor: COLORS.lightGray, 
           headerTitleStyle: {...FONTS.navTitle},
           headerLeft: ({onPress}) => (
