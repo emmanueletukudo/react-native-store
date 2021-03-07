@@ -6,7 +6,7 @@ import {BlurView} from "@react-native-community/blur";
 
 const Home = () => {
     const [showAddToCartModal, setShowAddToCartModal] = React.useState(false);
-    const [selectItem, setSelectedItem] =  React.useState(null);
+    const [selectedItem, setSelectedItem] =  React.useState(null);
     const [selectedSize, setSelectedSize] = React.useState("");
 
     const [featured, setFeatured] =  React.useState([
@@ -196,6 +196,35 @@ const Home = () => {
             </TouchableOpacity>
         )
     }
+
+    function renderSizes(){
+        return(
+            selectedItem.sizes.map((item, index) => {
+                return(
+                    <TouchableOpacity
+                    key = {index}
+                    style={{
+                        width: 35,
+                        height: 25,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginHorizontal: 5,
+                        marginBottom: 10,
+                        backgroundColor: selectedItem.sizes[index] == selectedSize ? COLORS.white : null,
+                        borderWidth: 1,
+                        borderColor: COLORS.white,
+                        borderRadius: 5,
+                    }}
+                    onPress={() => {
+                        setSelectedSize(item);
+                    }}
+                    >
+                        <Text style={{ color: selectedItem.sizes[index] == selectedSize ? COLORS.black : COLORS.white, ...FONTS.body4 }}>{item}</Text>
+                    </TouchableOpacity>
+                )
+            })
+        )
+    }
     return (
         <View style={style.container}>
             <Text style={{marginTop: SIZES.radius, marginHorizontal: SIZES.padding, ...FONTS.h2}}>FEATURED</Text>
@@ -237,7 +266,7 @@ const Home = () => {
             </View>
 
             {/* Modal */}
-            { selectItem && 
+            { selectedItem && 
             <Modal
             animationType = "slide"
             transparent= {true}
@@ -259,10 +288,10 @@ const Home = () => {
                 >
                 </TouchableOpacity>
                 {/* Modal content */}
-                <View style={{justifyContent: "center", width: "85%", backgroundColor: selectItem.bgColor}}> 
+                <View style={{justifyContent: "center", width: "85%", backgroundColor: selectedItem.bgColor}}> 
                    <View>
                    <Image
-                    source = {selectItem.img}
+                    source = {selectedItem.img}
                     resizeMode = "contain"
                         style = {{
                             width: "100%",
@@ -270,14 +299,16 @@ const Home = () => {
                         }} 
                     />
                    </View>
-                   <Text style={{ marginTop: SIZES.padding, marginHorizontal: SIZES.padding, color: COLORS.white, ...FONTS.h2}}>{selectItem.name}</Text>
-                   <Text style={{ marginTop: SIZES.base / 2, marginHorizontal: SIZES.padding, color: COLORS.white, ...FONTS.body3 }}>{selectItem.type}</Text>
-                   <Text style={{ marginTop: SIZES.radius, marginHorizontal: SIZES.padding, color: COLORS.white, ...FONTS.h1 }}>{selectItem.price}</Text>
+                   <Text style={{ marginTop: SIZES.padding, marginHorizontal: SIZES.padding, color: COLORS.white, ...FONTS.h2}}>{selectedItem.name}</Text>
+                   <Text style={{ marginTop: SIZES.base / 2, marginHorizontal: SIZES.padding, color: COLORS.white, ...FONTS.body3 }}>{selectedItem.type}</Text>
+                   <Text style={{ marginTop: SIZES.radius, marginHorizontal: SIZES.padding, color: COLORS.white, ...FONTS.h1 }}>{selectedItem.price}</Text>
                    <View style={{ flexDirection: "row", marginTop: SIZES.radius, marginHorizontal: SIZES.padding}}>
                         <View>
                         <Text style={{color: COLORS.white, ...FONTS.body3}}>Select Size</Text>
                         </View>
-                        
+                        <View style={{flex: 1, flexWrap: "wrap", flexDirection: "row", marginLeft: SIZES.radius}}>
+                        {renderSizes()}
+                        </View>
                    </View>
                    
                    <TouchableOpacity
