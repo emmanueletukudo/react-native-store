@@ -6,7 +6,7 @@ import {BlurView} from "@react-native-community/blur";
 
 const Home = () => {
     const [showAddToCartModal, setShowAddToCartModal] = React.useState(false);
-    const [selectItem, setSelecetedItem] =  React.useState(null);
+    const [selectItem, setSelectedItem] =  React.useState(null);
     const [selectedSize, setSelectedSize] = React.useState("");
 
     const [featured, setFeatured] =  React.useState([
@@ -117,7 +117,7 @@ const Home = () => {
             name: "Shoe 1",
             img: images.shoe1,
             type: "Featured",
-            bgColor: "#303946",
+            bgColor: "#ffffff",
             price: "$100" ,
             sizes: [6, 7, 8, 9, 10, 12],
         },
@@ -129,7 +129,7 @@ const Home = () => {
             <TouchableOpacity 
             style={{height: 300, width: 200, justifyContent: "center", marginHorizontal: SIZES.base }}
             onPress={() => {
-                setSelecetedItem(item);
+                setSelectedItem(item);
                 setShowAddToCartModal(true);
             }}
             >
@@ -170,7 +170,10 @@ const Home = () => {
         return(
             <TouchableOpacity
             style = {{flex: 1, flexDirection: "row"}}
-            onPress= {() => {console.log("renderRecentSearches")}}
+            onPress= {() => {
+                setSelectedItem(item);
+                setShowAddToCartModal(true);
+            }}
             >
             <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
                 <Image
@@ -195,7 +198,7 @@ const Home = () => {
     }
     return (
         <View style={style.container}>
-            <Text style={{marginTop: SIZES.radius, marginHorizontal: SIZES.padding, ...FONTS.largeTitleBold}}>FEATURED</Text>
+            <Text style={{marginTop: SIZES.radius, marginHorizontal: SIZES.padding, ...FONTS.h2}}>FEATURED</Text>
             {/* Featured */}
             <View style={{height: 260, marginTop: SIZES.radius}}>
                 <FlatList 
@@ -249,7 +252,7 @@ const Home = () => {
                 <TouchableOpacity
                 style={style.absolute}
                 onPress= {() => {
-                    setSelecetedItem(null);
+                    setSelectedItem(null);
                     setSelectedSize("");
                     setShowAddToCartModal(false);
                 }}
@@ -267,10 +270,26 @@ const Home = () => {
                         }} 
                     />
                    </View>
-                   <Text style={{ marginTop: SIZES.padding, marginHorizontal: SIZES.padding, color: COLORS.white, ...FONTS.body2 }}>{selectItem.name}</Text>
+                   <Text style={{ marginTop: SIZES.padding, marginHorizontal: SIZES.padding, color: COLORS.white, ...FONTS.h2}}>{selectItem.name}</Text>
                    <Text style={{ marginTop: SIZES.base / 2, marginHorizontal: SIZES.padding, color: COLORS.white, ...FONTS.body3 }}>{selectItem.type}</Text>
                    <Text style={{ marginTop: SIZES.radius, marginHorizontal: SIZES.padding, color: COLORS.white, ...FONTS.h1 }}>{selectItem.price}</Text>
-                   <Text>Select Size</Text>
+                   <View style={{ flexDirection: "row", marginTop: SIZES.radius, marginHorizontal: SIZES.padding}}>
+                        <View>
+                        <Text style={{color: COLORS.white, ...FONTS.body3}}>Select Size</Text>
+                        </View>
+                        
+                   </View>
+                   
+                   <TouchableOpacity
+                   style={{width: "100%", height: 70, justifyContent:"center", alignItems: "center", marginTop: SIZES.base, backgroundColor: 'rgba(0,0,0,0.5)'}}
+                   onPress = {() => {
+                    setSelectedItem(null);
+                    setSelectedSize("");
+                    setShowAddToCartModal(false);
+                   }}
+                   >
+                       <Text style={{color: COLORS.white, ...FONTS.largeTitleBold}}>Add To Cart</Text>
+                   </TouchableOpacity>
                 </View>
             </BlurView>
             </Modal>
